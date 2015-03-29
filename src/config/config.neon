@@ -12,6 +12,9 @@ services:
     databaseSelect: DatabaseSelect(@database)
     proposalImprove: ProposalImprove(@database)
     ForeignArticle: ForeignArticle(@database)
+    englishVersionModel: App\EnglishVersion\Model(@database)
+    englishVersionPageDownloader: App\EnglishVersion\PageDownloader()
+    englishVersionUrlConvertor: App\EnglishVersion\UrlConvertor(@englishVersionPageDownloader)
 
 parameters:
     storageUrl: http://dumps.wikimedia.org/
