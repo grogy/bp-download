@@ -2,7 +2,7 @@
 	"require": {
 		"php": ">= 5.4",
 	    "atrox/matcher": "1.0.0",
-	    "nette/nette": "2.3.0"
+	    "nette/nette": "2.3.1"
 	},
     "require-dev": {
 	    "mockery/mockery": "0.9.2",
