@@ -82,4 +82,4 @@ Assert::same("https://en.wikipedia.org/wiki/Prague", $urlConvertor->getURLForEng
 Assert::same("https://en.wikipedia.org/wiki/Sorting_algorithm", $urlConvertor->getURLForEnglishArticle('Řadicí algoritmus'));
 Assert::exception(function() use ($urlConvertor){
     $urlConvertor->getURLForEnglishArticle('Lično (Bačalky)');
-}, App\EnglishVersion\NotExistEnglishUrl::class);
+}, 'App\EnglishVersion\NotExistEnglishUrl');
