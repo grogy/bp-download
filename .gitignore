@@ -1,5 +1,6 @@
 /composer.lock
 /dev/deploy.sh
+/dev/install-cron.sh
 
 /.vagrant/
 /doc/
