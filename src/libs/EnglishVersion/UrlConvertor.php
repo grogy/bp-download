@@ -36,6 +36,14 @@ class UrlConvertor
         $articleCzechName = str_replace(' ', '_', $articleCzechName);
         return 'https://cs.wikipedia.org/wiki/' . urlencode($articleCzechName);
     }
+
+
+    public function getUrlForEditPage($urlForEnglishPage)
+    {
+        $partForURLTitle = substr($urlForEnglishPage, 30);
+        $url = 'https://en.wikipedia.org/w/index.php?title=' . $partForURLTitle . '&action=edit';
+        return $url;
+    }
 }
 
 

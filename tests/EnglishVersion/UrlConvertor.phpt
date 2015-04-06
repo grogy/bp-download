@@ -83,3 +83,7 @@ Assert::same("https://en.wikipedia.org/wiki/Sorting_algorithm", $urlConvertor->g
 Assert::exception(function() use ($urlConvertor){
     $urlConvertor->getURLForEnglishArticle('Lično (Bačalky)');
 }, 'App\EnglishVersion\NotExistEnglishUrl');
+
+
+Assert::same('https://en.wikipedia.org/w/index.php?title=PHP&action=edit', $urlConvertor->getUrlForEditPage('https://en.wikipedia.org/wiki/PHP'));
+Assert::same('https://en.wikipedia.org/w/index.php?title=Sorting_algorithm&action=edit', $urlConvertor->getUrlForEditPage('https://en.wikipedia.org/wiki/Sorting_algorithm'));
