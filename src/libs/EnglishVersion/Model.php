@@ -31,7 +31,8 @@ class Model
     {
         $articleForDownload = $this->getArticleByPortal($portal);
         $englishPageUrl = $this->urlConvertor->getURLForEnglishArticle($articleForDownload['name']);
-        $englishPage = $this->pageDownloader->downloadPage($englishPageUrl);
+        $englishPageUrlForEdit = $this->urlConvertor->getUrlForEditPage($englishPageUrl);
+        $englishPage = $this->pageDownloader->downloadPage($englishPageUrlForEdit);
         $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
         $this->saveEnglishPage($articleForDownload['name'], $wikiContentFromEnglishPage);
     }
