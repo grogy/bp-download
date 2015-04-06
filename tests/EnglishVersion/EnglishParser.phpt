@@ -19,5 +19,9 @@ $input = <<<'EOT'
     </body>
 </html>
 EOT;
+
 $expected = "== This is content in wiki syntax ==";
 Assert::same($expected, $englishParser->getContentFromTextarea($input));
+
+$expected = 'This is heading for page';
+Assert::same($expected, $englishParser->getTextFromH1($input));

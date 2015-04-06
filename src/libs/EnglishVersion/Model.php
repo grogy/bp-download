@@ -34,7 +34,8 @@ class Model
         $englishPageUrlForEdit = $this->urlConvertor->getUrlForEditPage($englishPageUrl);
         $englishPage = $this->pageDownloader->downloadPage($englishPageUrlForEdit);
         $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
-        $this->saveEnglishPage($articleForDownload['name'], $wikiContentFromEnglishPage);
+        $headingFromEnglishPage = substr($this->htmlParser->getTextFromH1($englishPage), 16);
+        $this->saveEnglishPage($headingFromEnglishPage, $wikiContentFromEnglishPage);
     }
 
 
