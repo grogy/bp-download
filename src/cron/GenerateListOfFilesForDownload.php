@@ -7,5 +7,5 @@ include_once __DIR__ . '/../bootstrap.php';
  */
 
 $listOfLinks = $container->getService('listOfLinks');
-$pathToNewBashScript = TEMP_DIR . '/wiki/files-for-download.sh';
+$pathToNewBashScript = TEMP_DIR . '/files-for-download.sh';
 $listOfLinks->generateDownloadFile($pathToNewBashScript);
