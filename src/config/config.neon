@@ -11,6 +11,7 @@ services:
     englishVersionModel: App\EnglishVersion\Model(@database, @englishVersionUrlConvertor, @englishVersionPageDownloader)
     englishVersionPageDownloader: App\EnglishVersion\PageDownloader()
     englishVersionUrlConvertor: App\EnglishVersion\UrlConvertor(@englishVersionPageDownloader)
+    englishParser: App\EnglishVersion\EnglishParser()
 
 parameters:
     storageUrl: http://dumps.wikimedia.org/
