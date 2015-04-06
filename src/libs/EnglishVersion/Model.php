@@ -11,29 +11,40 @@ class Model
      */
     private $database;
 
+    private $urlConvertor;
 
-    public function __construct(Connection $database)
+    private $pageDownloader;
+
+    private $htmlParser;
+
+
+    public function __construct(Connection $database, UrlConvertor $urlConvertor, PageDownloader $pageDownloader, EnglishParser $parser)
     {
         $this->database = $database;
+        $this->urlConvertor = $urlConvertor;
+        $this->pageDownloader = $pageDownloader;
+        $this->htmlParser = $parser;
     }
 
 
     public function downloadNextPageForPortal($portal)
     {
         $articleForDownload = $this->getArticleByPortal($portal);
-        // download english page..
-        // save english page
-        // or save information about missing page in english version
+        $englishPageUrl = $this->urlConvertor->getURLForEnglishArticle($articleForDownload['name']);
+        $englishPage = $this->pageDownloader->downloadPage($englishPageUrl);
+        $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
+        $this->saveEnglishPage($articleForDownload['name'], $wikiContentFromEnglishPage);
     }
 
 
     /**
      * Get no-download page for concrete portal $portalName
      * @todo missing test
+     * @todo miss articles with exist english version article
      * @param string $portalName
      * @return array
      */
-    public function getArticleByPortal($portalName)
+    private function getArticleByPortal($portalName)
     {
         $query = '
             SELECT a.*
@@ -44,5 +55,20 @@ class Model
             LIMIT 1';
         $article = $this->database->query($query, $portalName)->fetch();
         return $article;
+    }
+
+
+    /**
+     * @param $name string
+     * @param $wikiContent string
+     * @todo missing test
+     * @return \Nette\Database\ResultSet
+     */
+    private function saveEnglishPage($name, $wikiContent)
+    {
+        $query = '
+            INSERT INTO articles(`language`, `name`, `text`)
+            VALUES(?, ?, ?)';
+        return $this->database->query($query, 'en', $name, $wikiContent);
     }
 }
