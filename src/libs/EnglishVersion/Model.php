@@ -54,7 +54,7 @@ class Model
             FROM articles a
             JOIN article_portals m ON a.id = m.article_id
             JOIN portals p ON p.id = m.portal_id
-            WHERE p.name = ?
+            WHERE p.name = ? AND a.id NOT IN (SELECT article_czech FROM articles_language_association)
             LIMIT 1';
         $article = $this->database->query($query, $portalName)->fetch();
         return $article;
