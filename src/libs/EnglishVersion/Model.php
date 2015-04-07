@@ -36,6 +36,7 @@ class Model
         $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
         $headingFromEnglishPage = substr($this->htmlParser->getTextFromH1($englishPage), 16);
         $this->saveEnglishPage($headingFromEnglishPage, $wikiContentFromEnglishPage);
+        $this->saveAssociation($articleForDownload['id']);
     }
 
 
@@ -72,5 +73,19 @@ class Model
             INSERT INTO articles(`language`, `name`, `text`)
             VALUES(?, ?, ?)';
         return $this->database->query($query, 'en', $name, $wikiContent);
+    }
+
+
+    /**
+     * @param $idForCzechArticle int
+     * @todo missing test
+     */
+    private function saveAssociation($idForCzechArticle)
+    {
+        $idForEnglishArticle = $this->database->query('SELECT LAST_INSERT_ID() id')->fetch();
+        $query = '
+            INSERT INTO articles_language_association(article_czech, article_english)
+            VALUES(?, ?)';
+        $this->database->query($query, $idForCzechArticle, $idForEnglishArticle['id']);
     }
 }

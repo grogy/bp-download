@@ -49,3 +49,11 @@ CREATE TABLE proposal_improve (
 	type TINYINT NOT NULL,
 	FOREIGN KEY (article_id) REFERENCES articles (id)
 ) ENGINE=InnoDB;
+
+
+CREATE TABLE `articles_language_association` (
+  `article_czech` int(11) NOT NULL,
+  `article_english` int(11) NOT NULL,
+  FOREIGN KEY (`article_czech`) REFERENCES `articles` (`id`),
+  FOREIGN KEY (`article_english`) REFERENCES `articles` (`id`)
+) ENGINE=InnoDB;
