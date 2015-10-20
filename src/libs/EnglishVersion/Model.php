@@ -30,12 +30,16 @@ class Model
     public function downloadNextPageForPortal($portal)
     {
         $articleForDownload = $this->getArticleByPortal($portal);
-        $englishPageUrl = $this->urlConvertor->getURLForEnglishArticle($articleForDownload['name']);
-        $englishPageUrlForEdit = $this->urlConvertor->getUrlForEditPage($englishPageUrl);
-        $englishPage = $this->pageDownloader->downloadPage($englishPageUrlForEdit);
-        $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
-        $headingFromEnglishPage = substr($this->htmlParser->getTextFromH1($englishPage), 16);
-        $this->saveEnglishPage($headingFromEnglishPage, $wikiContentFromEnglishPage);
+        try {
+            $englishPageUrl = $this->urlConvertor->getURLForEnglishArticle($articleForDownload['name']);
+            $englishPageUrlForEdit = $this->urlConvertor->getUrlForEditPage($englishPageUrl);
+            $englishPage = $this->pageDownloader->downloadPage($englishPageUrlForEdit);
+            $wikiContentFromEnglishPage = $this->htmlParser->getContentFromTextarea($englishPage);
+            $headingFromEnglishPage = substr($this->htmlParser->getTextFromH1($englishPage), 16);
+            $this->saveEnglishPage($headingFromEnglishPage, $wikiContentFromEnglishPage);
+        } catch (NotExistEnglishUrl $e) {
+            $this->saveEnglishPage('', '');
+        }
         $this->saveAssociation($articleForDownload['id']);
     }
 
